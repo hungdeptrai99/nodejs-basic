@@ -37,3 +37,9 @@ body {
   margin-top: 15px;
   cursor: pointer;
 }
+.update-user-container {
+  text-align: center;
+}
+.update-user-container label{
+  display: block;
+}
