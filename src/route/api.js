@@ -7,6 +7,7 @@ const initWebRoute = (app) => {
   router.get("/users", apiController.getAllUsers);
   router.post("/create-user",apiController.createNewUsers)
   router.put("/update-user",apiController.updateUser)
+//   router.delete("/delete-user/:userId/:name",apiController.deleteUser) su dung khi xai req.params
   router.delete("/delete-user",apiController.deleteUser)
   return app.use("/api/v1/", router);
 };

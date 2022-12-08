@@ -41,28 +41,28 @@ let updateUser = async (req, res) => {
 };
 const url = require("url");
 let deleteUser = async (req, res) => {
-    let userId = req.query.id;
-    console.log(req.params)
-    // if (!userId) {
-    //   return res.status(200).json({
-    //     message: "missing required params",
-    //   });
-    // }
+  let userId = req.query.id;
+  // let useridParam = req.params  || su dung khi truyen :id ben Route API
+  if (!userId) {
+    return res.status(200).json({
+      message: "missing required params",
+    });
+  }
 
-    // let [dataUserId] = await pool.execute("select * from users where id=?", [
-    //   userId,
-    // ]);
+  let [dataUserId] = await pool.execute("select * from users where id=?", [
+    userId,
+  ]);
 
-    // if (dataUserId.length < 1) {
-    //   return res.status(200).json({
-    //     message: "data is not exsits",
-    //   });
-    // }
+  if (dataUserId.length < 1) {
+    return res.status(200).json({
+      message: "data is not exsits",
+    });
+  }
 
-    // await pool.execute("delete from users where id = ?", [userId]);
-    // return res.status(200).json({
-    //   message: "success",
-    // });
+  await pool.execute("delete from users where id = ?", [userId]);
+  return res.status(200).json({
+    message: "success",
+  });
 };
 module.exports = {
   getAllUsers,
