@@ -16,18 +16,23 @@ const PAGE_SIZE = 5;
 // Phan trang users
 router.get("/users", (req, res, next) => {
   let { page, limit } = req.query;
-
+  let total = 0;
   if (page) {
     page = parseInt(page);
-    if(page < 1) {
-        page = 1
+    if (page < 1) {
+      page = 1;
     }
     var skip = (page - 1) * limit; // số lượng bỏ qua
     AccountModel.find({})
       .skip(skip)
       .limit(limit)
       .then((data) => {
-        res.json(data);
+        AccountModel.countDocuments({}).then((result) => {
+          console.log('>>>',total)
+          console.log('>>>limit',limit)
+          total = Math.ceil(result / limit);
+          res.json({ data, total });
+        });
       })
       .catch((err) => {
         res.status(500).json("loi server");
@@ -36,7 +41,8 @@ router.get("/users", (req, res, next) => {
     //Get All
     AccountModel.find({})
       .then((data) => {
-        res.status(200).json(data);
+        let total = Math.ceil(data.length / limit);
+        res.status(200).json({ data, total });
       })
       .catch((err) => {
         res.status(500).json("loi server");
